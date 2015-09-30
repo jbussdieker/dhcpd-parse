@@ -72,6 +72,12 @@ class Rparser::Parser < Racc::Parser
       when (text = @ss.scan(/\s+/))
         ;
 
+      when (text = @ss.scan(/\d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}/))
+         action { [:datetime, text] }
+
+      when (text = @ss.scan(/[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}/))
+         action { [:macaddr, text] }
+
       when (text = @ss.scan(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/))
          action { [:ipaddress, text] }
 

@@ -1,6 +1,8 @@
 class Rparser::Parser
 macro
   COMMENT     \#.*(?=$)
+  DATETIME    \d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}
+  MACADDR     [0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}
   NEWLINE     \n
   BLANK       \s+
   KEYWORD     [a-zA-Z][a-zA-Z\-_]+
@@ -17,6 +19,8 @@ rule
   {COMMA}     { [:comma, text] }
   {KEYWORD}   { [:keyword, text] }
   {BLANK}
+  {DATETIME}  { [:datetime, text] }
+  {MACADDR}   { [:macaddr, text] }
   {IPADDR}    { [:ipaddress, text] }
   {INTEGER}   { [:integer, text] }
   {SEMICOLON} { [:semicolon, text] }
