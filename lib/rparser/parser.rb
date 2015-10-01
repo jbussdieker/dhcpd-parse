@@ -7,86 +7,80 @@
 require 'racc/parser.rb'
 module Rparser
   class Parser < Racc::Parser
+
+def key_value_value(key1, key2, val)
+  return { val[0] => { key1 => val[1], key2 => val[2] } } 
+end
+
+def key_value(val)
+  return { val[0] => val[1] }
+end
 ##### State transition tables begin ###
 
 racc_action_table = [
-     5,     6,     7,    20,    26,    22,    18,    21,    34,    23,
-    13,    11,     9,    10,    12,     5,     6,     7,    14,    15,
-     8,    24,    25,    16,    27,    28,    29,    30,    23,    33,
-     3,    35 ]
+     5,     6,    10,     8,     9,    15,     5,     6,    11,    22,
+    16,    17,    14,     7,    13,    19,    20,    21,     3 ]
 
 racc_action_check = [
-    31,    31,    31,    11,    17,    11,    11,    11,    31,    11,
-     7,     7,     7,     7,     7,     2,     2,     2,     9,     9,
-     3,    12,    15,    10,    18,    19,    21,    22,    25,    30,
-     1,    32 ]
+    18,    18,     6,     6,     6,    10,     2,     2,     6,    18,
+    10,    11,     9,     3,     8,    14,    15,    16,     1 ]
 
 racc_action_pointer = [
-   nil,    30,    13,    20,   nil,   nil,   nil,     7,   nil,    15,
-    20,     0,    18,   nil,   nil,    17,   nil,     1,    21,    22,
-   nil,    23,    19,   nil,   nil,    19,   nil,   nil,   nil,   nil,
-    24,    -2,    28,   nil,   nil,   nil ]
+   nil,    18,     4,    13,   nil,   nil,    -1,   nil,     4,     6,
+     2,     4,   nil,   nil,     8,     9,    10,   nil,    -2,   nil,
+   nil,   nil,   nil ]
 
 racc_action_default = [
-    -2,   -18,    -1,   -18,    -3,    -4,    -5,   -18,    36,   -18,
-   -18,   -18,   -18,   -13,    -6,   -18,    -7,   -18,   -18,   -18,
-   -11,   -18,   -18,    -2,   -12,   -18,    -8,    -9,   -10,   -14,
-   -18,   -18,   -18,   -16,   -17,   -15 ]
+    -2,   -11,    -1,   -11,    -3,    -4,   -11,    23,   -11,   -11,
+   -11,   -11,    -5,    -2,   -11,   -11,   -11,    -9,   -11,    -6,
+    -7,    -8,   -10 ]
 
 racc_goto_table = [
-     2,    17,     1,    19,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,    32,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,    31 ]
+     2,     1,    12,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,    18 ]
 
 racc_goto_check = [
-     2,     4,     1,     5,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,     4,   nil,   nil,   nil,   nil,
+     2,     1,     4,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
    nil,   nil,   nil,     2 ]
 
 racc_goto_pointer = [
-   nil,     2,     0,   nil,   -10,    -8 ]
+   nil,     1,     0,   nil,    -6 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,     4,   nil,   nil ]
+   nil,   nil,   nil,     4,   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  1, 12, :_reduce_1,
-  0, 13, :_reduce_none,
-  2, 13, :_reduce_3,
-  1, 14, :_reduce_4,
-  1, 14, :_reduce_none,
-  3, 14, :_reduce_6,
-  3, 14, :_reduce_7,
-  4, 14, :_reduce_8,
-  4, 14, :_reduce_9,
-  4, 14, :_reduce_10,
-  3, 14, :_reduce_11,
-  3, 14, :_reduce_12,
-  2, 14, :_reduce_13,
-  4, 14, :_reduce_14,
-  6, 14, :_reduce_15,
-  3, 16, :_reduce_none,
-  3, 15, :_reduce_17 ]
+  1, 13, :_reduce_none,
+  0, 14, :_reduce_none,
+  2, 14, :_reduce_3,
+  1, 15, :_reduce_none,
+  3, 15, :_reduce_5,
+  4, 15, :_reduce_6,
+  4, 15, :_reduce_7,
+  4, 15, :_reduce_8,
+  3, 15, :_reduce_9,
+  3, 16, :_reduce_10 ]
 
-racc_reduce_n = 18
+racc_reduce_n = 11
 
-racc_shift_n = 36
+racc_shift_n = 23
 
 racc_token_table = {
   false => 0,
   :error => 1,
   :comment => 2,
-  :semicolon => 3,
-  :keyword => 4,
-  :ipaddress => 5,
-  :integer => 6,
-  :string => 7,
-  :comma => 8,
-  :lcurly => 9,
-  :rcurly => 10 }
+  :keyword => 3,
+  :ipaddress => 4,
+  :integer => 5,
+  :datetime => 6,
+  :semicolon => 7,
+  :macaddr => 8,
+  :string => 9,
+  :lcurly => 10,
+  :rcurly => 11 }
 
-racc_nt_base = 11
+racc_nt_base = 12
 
 racc_use_result_var = true
 
@@ -110,20 +104,20 @@ Racc_token_to_s_table = [
   "$end",
   "error",
   "comment",
-  "semicolon",
   "keyword",
   "ipaddress",
   "integer",
+  "datetime",
+  "semicolon",
+  "macaddr",
   "string",
-  "comma",
   "lcurly",
   "rcurly",
   "$start",
   "document",
   "statements",
   "statement",
-  "block",
-  "iplist" ]
+  "block" ]
 
 Racc_debug_parser = false
 
@@ -131,86 +125,45 @@ Racc_debug_parser = false
 
 # reduce 0 omitted
 
-def _reduce_1(val, _values, result)
- puts "BOOM1"; return val 
-    result
-end
+# reduce 1 omitted
 
 # reduce 2 omitted
 
 def _reduce_3(val, _values, result)
-                   if val[0]
-                     puts "statements"
-                     return val[0] << val[1]
-                   end
-                   if val[1]
-                     puts "statement"
-                     return [val[1]]
-                   end
+                   return val[0] << val[1] if val[0]
+                   return [val[1]] if val[1]
                  
     result
 end
 
-def _reduce_4(val, _values, result)
- return { :comment => val[0] } 
+# reduce 4 omitted
+
+def _reduce_5(val, _values, result)
+ return key_value_value(:ipaddress, :options, val) 
     result
 end
 
-# reduce 5 omitted
-
 def _reduce_6(val, _values, result)
- return { val[0] => val[1] } 
+ return key_value_value(:integer, :datetime, val) 
     result
 end
 
 def _reduce_7(val, _values, result)
- return { val[0] => val[1] } 
+ return { val[0] => { val[1] => val[2] } } 
     result
 end
 
 def _reduce_8(val, _values, result)
- return { val[0] => { val[1] => val[2] } } 
+ return key_value_value('hardware-type', 'mac-address', val) 
     result
 end
 
 def _reduce_9(val, _values, result)
- return { val[0] => { val[1] => val[2] } } 
+ return key_value(val) 
     result
 end
 
 def _reduce_10(val, _values, result)
- return { val[0] => { val[1] => val[2] } } 
-    result
-end
-
-def _reduce_11(val, _values, result)
- return { val[0] => val[1] } 
-    result
-end
-
-def _reduce_12(val, _values, result)
- return { val[0] => val[1] } 
-    result
-end
-
-def _reduce_13(val, _values, result)
- return { val[0] => true } 
-    result
-end
-
-def _reduce_14(val, _values, result)
- return { val[0] => { val[1] => val[2] } } 
-    result
-end
-
-def _reduce_15(val, _values, result)
- return { val[0] => val[1], val[2] => val[3], :block => val[4] } 
-    result
-end
-
-# reduce 16 omitted
-
-def _reduce_17(val, _values, result)
  return val[1] 
     result
 end

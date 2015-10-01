@@ -61,12 +61,24 @@ class Rparser::Parser < Racc::Parser
         ;
 
       when (text = @ss.scan(/\#.*(?=$)/))
-         action { [:comment, text] }
+         action { [:comment, {:text => text}] }
 
       when (text = @ss.scan(/,/))
          action { [:comma, text] }
 
-      when (text = @ss.scan(/[a-zA-Z][a-zA-Z\-_]+/))
+      when (text = @ss.scan(/=/))
+         action { [:equals, text] }
+
+      when (text = @ss.scan(/[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}/))
+         action { [:macaddr, text] }
+
+      when (text = @ss.scan(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/))
+         action { [:ipaddress, text] }
+
+      when (text = @ss.scan(/[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}/))
+         action { [:ipaddress2, text] }
+
+      when (text = @ss.scan(/[a-zA-Z][a-zA-Z\-_0-9\.]+/))
          action { [:keyword, text] }
 
       when (text = @ss.scan(/\s+/))
@@ -74,12 +86,6 @@ class Rparser::Parser < Racc::Parser
 
       when (text = @ss.scan(/\d{4}\/\d{2}\/\d{2}\s\d{2}\:\d{2}\:\d{2}/))
          action { [:datetime, text] }
-
-      when (text = @ss.scan(/[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}/))
-         action { [:macaddr, text] }
-
-      when (text = @ss.scan(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/))
-         action { [:ipaddress, text] }
 
       when (text = @ss.scan(/\d+/))
          action { [:integer, text] }

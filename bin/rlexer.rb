@@ -8,7 +8,8 @@ begin
   parser.scan_setup(ARGF.read)
   puts "=== RESULT ==="
   while token = parser.next_token
-    puts ":#{token.first} =>  #{token.last}"
+    #puts ":#{token.first} => #{token.last.inspect}"
+    p token
     tokens << token
   end
   tokens
